@@ -140,8 +140,8 @@ body {
 }
 
 .project-tag {
-    background: rgba(106, 91, 238, 0.2);
-    color: #d8b4fe;
+    background: rgba(106, 91, 238, 0.35);
+    color: var(--text-secondary);
     border: 1px solid rgba(139, 92, 246, 0.4);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
