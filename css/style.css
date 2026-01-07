@@ -41,9 +41,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    flex-wrap: wrap;
 }
 
 .header-title {
@@ -127,6 +128,9 @@ body {
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
+    display: inline;
+    max-width: 100%;
+    word-break: break-all;
 }
 
 /* Footer */
@@ -152,5 +156,24 @@ body {
 
     .project-card {
         padding: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.4rem;
+    }
+
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) and (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 }
