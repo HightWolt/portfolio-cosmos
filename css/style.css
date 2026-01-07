@@ -41,10 +41,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 1.5rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    flex-wrap: wrap;
 }
 
 .header-title {
@@ -153,17 +152,5 @@ body {
 
     .project-card {
         padding: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-title {
-        font-size: 1.4rem;
-    }
-
-    .theme-toggle {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
     }
 }
