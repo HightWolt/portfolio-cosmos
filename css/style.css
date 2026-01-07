@@ -17,6 +17,7 @@
   --transition: all 0.3s ease;
   --font-heading: 'Exo 2', sans-serif;
   --font-body: 'Roboto', sans-serif;
+  --font-tags: 'Rajdhani', sans-serif;
 }
 
 .theme-dark {
@@ -42,6 +43,12 @@ body {
 .project-title, 
 .footer {
     font-family: var(--font-heading);
+    font-weight: 600;
+}
+
+.project-tag,
+.theme-toggle {
+    font-family: var(--font-tags);
 }
 
 /* Header */
@@ -67,12 +74,13 @@ body {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    font-weight: 700;
 }
 
 .theme-toggle:hover {
@@ -132,12 +140,19 @@ body {
 }
 
 .project-tag {
-    background: rgba(67, 97, 238, 0.15);
-    color: var(--accent);
+    background: rgba(106, 91, 238, 0.2);
+    color: #d8b4fe;
+    border: 1px solid rgba(139, 92, 246, 0.4);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
+    transition: var(--transition);
+}
+
+.project-tag:hover {
+    background: rgba(124, 58, 237, 0.3);
+    transform: scale(1.05);
 }
 
 /* Footer */
