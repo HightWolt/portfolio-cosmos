@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Космическое портфолио</title>
+    <meta name="description" content="Моё портфолио — карта проектов в космосе.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-light">
+    <header class="header">
+        <h1 class="header-title">🌌 Космическое Портфолио</h1>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
+            🌑
+        </button>
+    </header>
+
+    <main class="projects-grid" aria-label="Карта проектов">
+        <!-- Проекты появятся здесь -->
+         <div class="project-card" data-project="1">
+            <h2 class="project-title">Портал галактик</h2>
+            <p class="project-desc">Интерактивная карта Млечного Пути с WebGL.</p>
+            <span class="project-tag">WebGL • Three.js</span>
+         </div>
+         <div class="project-card" data-project="2">
+            <h2 class="project-title">Чат с НЛО</h2>
+            <p class="project-desc">Реалтайм-чат на WebSocket + AI-бот.</p>
+            <span class="project-tag">Node.js • Socket.IO</span>
+         </div>
+         <div class="project-card" data-project="3">
+            <h2 class="project-title">Калькулятор орбит</h2>
+            <p class="project-desc">Физический симулятор гравитации планет.</p>
+            <span class="project-tag">JavaScript • Canvas</span>
+         </div>
+    </main>
+
+    <footer class="footer">
+        <p>🚀 Собрано вручную. GitHub Pages. Lighthouse ≥95 — цель!</p>
+    </footer>
+
+    <script>
+        // Пока минимум JS — только переключение темы
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const body = document.body;
+            const isLight = body.classList.contains('theme-light');
+            body.classList.toggle('theme-light', !isLight);
+            body.classList.toggle('theme-dark', isLight);
+            localStorage.setItem('theme', isLight ? 'dark' : 'light');
+        });
+
+        // Восстановление темы из localStorage
+        const savedThame = localStorage.getItem('theme') || 'light';
+        if (savedThame === 'dark') {
+            document.body.classList.replace('theme-light', 'theme-dark');
+        }
+    </script>
+</body>
+</html>
