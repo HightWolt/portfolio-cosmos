@@ -89,6 +89,59 @@ body {
     color: var(--bg-primary);
 }
 
+/* Звезда-пульсар */
+.pulsar-star {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.pulsar-star:hover {
+    transform: scale(1.3) rotate(10deg);
+}
+
+.star-core {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: radial-gradient(circle, #ff9e64, #ff5400);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 15px #ff5400,
+        0 0 30px rgba(255, 158, 100, 0.6);
+    z-index: 2;
+}
+
+.star-glow {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(106, 91, 238, 0.7), transparent 70%);
+    border-radius: 50%;
+    animation: pulseGlow 2s infinite alternate;
+    z-index: 1;
+}
+
+/* Анимация пульсации */
+@keyframes pulseGlow {
+    from {
+        opacity: 0.6;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.1);
+        box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
+    }
+}
+
 /* Projects Grid */
 .projects-grid {
     display: grid;
@@ -178,5 +231,20 @@ body {
 
     .project-card {
         padding: 1.2rem;
+    }
+
+    .pulsar-star {
+        width: 35px;
+        height: 35px;
+    }
+
+    .star-core {
+        width: 16px;
+        height: 16px;
+    }
+
+    .star-glow {
+        width: 28px;
+        height: 28px;
     }
 }
