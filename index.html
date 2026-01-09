@@ -29,27 +29,64 @@
 
     <main class="projects-grid" aria-label="Карта проектов">
         <!-- Проекты появятся здесь -->
-         <div class="project-card" data-project="1">
+        <div class="project-card" data-project="1">
             <h2 class="project-title">Портал галактик</h2>
             <p class="project-desc">Интерактивная карта Млечного Пути с WebGL.</p>
             <span class="project-tag">WebGL • Three.js</span>
-         </div>
-         <div class="project-card" data-project="2">
+        </div>
+        <div class="project-card" data-project="2">
             <h2 class="project-title">Чат с НЛО</h2>
             <p class="project-desc">Реалтайм-чат на WebSocket + AI-бот.</p>
             <span class="project-tag">Node.js • Socket.IO</span>
-         </div>
-         <div class="project-card" data-project="3">
+        </div>
+        <div class="project-card" data-project="3">
             <h2 class="project-title">Калькулятор орбит</h2>
             <p class="project-desc">Физический симулятор гравитации планет.</p>
             <span class="project-tag">JavaScript • Canvas</span>
-         </div>
+        </div>
+        <section class="contact-form" aria-labelledby="form-title">
+            <h2 id="form-title" class="form-title">📩 Связаться с экипажем</h2>
+            <form id="spaceship-form" novalidate>
+                <div class="form-group">
+                    <label for="name">Имя космонавта</label>
+                    <input type="text" id="name" name="name" required minlength="2">
+                    <div class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Галактическая почта</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Сообщение в гиперпространство</label>
+                    <textarea name="message" id="message" rows="4" required maxlength="10"></textarea>
+                    <div class="error-message" role="alert"></div>
+                </div>
+
+                <button type="submit" class="form-submit">
+                    <span class="submit-text">Отправить</span>
+                    <span class="submit-loading" aria-hidden="true">🚀</span>
+                </button>
+
+                <div class="form-success" role="status" aria-hidden="true">
+                    ✅ Сообщение отправлено в гиперпространство!
+                </div>
+                
+                <div class="form-error" role="alert" aria-hidden="true">
+                    ❌ Ошибка связи с МКС! Попробуйте позже.
+                </div>
+
+            </form>
+        </section>
     </main>
 
     <footer class="footer">
         <p>🚀 Собрано вручную. GitHub Pages. Lighthouse ≥95 — цель!</p>
     </footer>
 
+    <!-- Скрипты -->
     <script>
         // Пока минимум JS — только переключение темы
         document.getElementById('theme-toggle').addEventListener('click', () => {
@@ -66,5 +103,6 @@
             document.body.classList.replace('theme-light', 'theme-dark');
         }
     </script>
+    <script src="js/form.js"></script>
 </body>
 </html>
