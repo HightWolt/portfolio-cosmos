@@ -29,7 +29,7 @@ jobs:
                 LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
             - name: 📤 Деплой на GitHub Pages
-              uses: action/deploy-pages@v2
+              uses: actions/deploy-pages@v2
               id: deployment
               with:
                 token: ${{ secrets.GITHUB_TOKEN }}
