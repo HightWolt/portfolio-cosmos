@@ -2,6 +2,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Demo-GitHub_Pages-33ccff?style=flat-square&logo=github)](https://hightwolt.github.io/portfolio-cosmos/)
 [![Lighthouse 100](https://img.shields.io/badge/Lighthouse-100%25-brightgreen?style=flat-square)](https://hightwolt.github.io/portfolio-cosmos/)
+[![Статус сборки](https://img.shields.io/github/actions/workflow/status/hightwolt/portfolio-cosmos/deploy.yml?branch=main&style=flat-square)](https://github.com/hightwolt/portfolio-cosmos/actions)
 
 ## 🚀 Цели проекта
 - Lighthouse ≥ 95
@@ -31,6 +32,7 @@
 - [x] **«SEO-навигатор»** (Lighthouse SEO = 100/100.)
 - [x] **«Оптимизатор»** (Lighthouse Performance = 99/100.)
 - [x] **«Ключ к чат-боту»** (Активирован чат-бот «Капитан Верстак».)
+
 
 
 
