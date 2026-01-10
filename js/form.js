@@ -6,41 +6,6 @@ function initForm() {
 
     form.addEventListener('submit', handleFormSubmit);
 
-    initPulsarEasterEgg();
-}
-
-function initPulsarEasterEgg() {
-    const star = document.querySelector('.pulsar-star');
-    if (!star) {
-        console.warn('Элемент .pulsar-star не найден для Easter Egg');
-        return;
-    }
-
-    const successMessage = document.querySelector('.form-success');
-    if (!successMessage) {
-        console.warn('Элемент .form-success не найден для Easter Egg');
-        return;
-    }
-
-    const originalText = successMessage.textContent || 'Форма успешно отправлена!';
-    let clickCount = 0;
-
-    star.addEventListener('click', () => {
-        clickCount++;
-        console.log(`Клик ${clickCount}/3 на Пульсар`);
-
-        if (clickCount >= 3) {
-            const message = `🚀 Секретный уровень! Твой баланс: ${getStarBalance()} ⭐`;
-            successMessage.textContent = message;
-            successMessage.ariaHidden = false;
-
-            setTimeout(() => {
-                successMessage.ariaHidden = true;
-                successMessage.textContent = originalText;
-                clickCount = 0;
-            }, 3000);
-        }
-    });
 }
 
 function handleFormSubmit(e) {
@@ -68,7 +33,6 @@ function handleFormSubmit(e) {
                 }
 
                 form.reset();
-                animatePulsarStar();
             } else {
                 const errorMessage = document.querySelector('.form-error');
                 if (errorMessage) {
@@ -165,21 +129,4 @@ function stopSubmitAnimation() {
 
     if (textEl) textEl.textContent = 'Отправить';
     if (loadingEl) loadingEl.style.display = 'none';
-}
-
-// Эффект для звезды "Пульсар"
-function animatePulsarStar() {
-    const star = document.querySelector('.pulsar-star');
-    if (!star) return;
-
-    star.style.transform = 'scale(1.5) rotate(360deg)';
-    setTimeout(() => {
-        star.style.transform = 'scale(1) rotate(0deg)';
-    }, 1000);
-}
-
-// Функция баланса (пример)
-function getStarBalance() {
-    // В реальности берётся из localStorage или API
-    return Math.floor(Math.random() * 500) + 50;
 }

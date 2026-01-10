@@ -4,10 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.querySelector(".chatbot-input input");
     const sendBtn = document.querySelector(".chatbot-send");
     const messages = document.querySelector(".chatbot-messages");
+    const pulsarStar = document.querySelector(".pulsar-star");
 
-    // Показываем чат-бота при клике на звезду (Easter Egg)
-    document.querySelector('.pulsar-star')?.addEventListener('click', () => {
+    // Единый обработчик кликов по пульсару
+    let clickCount = 0;
+    pulsarStar?.addEventListener('click', () => {
+        clickCount++;
+
+        // Открываем чат-бота при любом клике (устраняем конфликт с пасхалкой)
         chatbot.ariaHidden = 'false';
+
+        // Сбрасываем счётчик после задержки
+        setTimeout(() => {
+            clickCount = 0
+        }, 500);
     });
 
     // Переключение видимости
@@ -17,44 +27,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Обработка отправки сообщений
     const sendMessage = () => {
-        const text = input.value.trim();
+        const text = input.value.trim().toLowerCase();
         if (!text) return;
 
-        // Добавляем сообщение пользователя
-        const userMsg = document.createElement('div');
-        userMsg.className = 'message user';
-        userMsg.textContent = text;
-        messages.appendChild(userMsg);
-        messages.scrollTop = messages.scrollHeight;
-
-        // Очищаем поле ввода
+        addUserMessage(text);
         input.value = '';
 
         // Ответ бота
         setTimeout(() => {
-            const botMsg = document.createElement('div');
-            botMsg.className = 'message bot';
-
             if (text === '?') {
-                botMsg.innerHTML = `
+                addBotMessage(`
                     <strong>Команды Капитана:</strong><br>
                     • <code>баланс</code> — показать звёзды<br>
                     • <code>помощь</code> — список квестов<br>
                     • <code>ракета</code> — запустить секретную анимацию
-                `;
+                `);
             } else if (text === 'баланс') {
-                botMsg.textContent = 'Твой баланс: 450 ⭐';
+                addBotMessage(`Твой баланс: ${getStarBalance()} ⭐`);
             } else if (text === 'ракета') {
-                botMsg.textContent = 'Запускаю ракету... 🚀';
+                addBotMessage('Запускаю ракету... 🚀');
                 animatePulsarStar();
             } else {
-                botMsg.textContent = 'Капитан Верстак: ' + getBotResponse(text);
+                addBotMessage('Капитан Верстак: ' + getBotResponse(text));
             }
-
-            messages.appendChild(botMsg);
-            messages.scrollTop = messages.scrollHeight;
         }, 500);
     };
+
+    // Вспомогательные функции для сообщений
+    function addUserMessage(text) {
+        const msg = document.createElement('div');
+        msg.className = 'message user';
+        msg.textContent = text;
+        messages.appendChild(msg);
+        scrollToBottom();
+    }
+
+    function addBotMessage(content) {
+        const msg = document.createElement('div');
+        msg.className = 'message bot';
+        msg.innerHTML = content;
+        messages.appendChild(msg);
+        scrollToBottom();
+    }
+
+    function scrollToBottom() {
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Единая функция анимации (теперь только здесь)
+    function animatePulsarStar() {
+        if (!pulsarStar) return;
+
+        pulsarStar.style.transition = 'transform 1s cubic-bezier(0.19, 1, 0.22, 1)';
+        pulsarStar.style.transform = 'scale(1.8) rotate(720deg)';
+
+        setTimeout(() => {
+            pulsarStar.style.transform = 'scale(1) rotate(0deg)';
+            // Восстанавливаем стандартную анимацию при наведении
+            setTimeout(() => {
+                pulsarStar.style.transition = '';
+            }, 1000);
+        }, 1000);
+    }
+
+    // Реализация баланса
+    function getStarBalance() {
+        return localStorage.getItem('starBalance') || '450';
+    }
 
     sendBtn.addEventListener('click', sendMessage);
     input.addEventListener('keypress', e => {
@@ -71,18 +110,5 @@ document.addEventListener('DOMContentLoaded', () => {
             'Пилот, вы на правильном курсе! 🌌'
         ];
         return responses[Math.floor(Math.random() * responses.length)];
-    }
-
-    // Анимация звезды при команде "ракета"
-    function animatePulsarStar() {
-        const star = document.querySelector('.pulsar-star');
-        if (!star) return;
-
-        star.style.transition = 'transform 1s ease';
-        star.style.transform = 'scale(1.8) rotate(720deg)';
-
-        setTimeout(() => {
-            star.style.transform = 'scale(1) rotate(0deg)';
-        }, 1000);
     }
 });

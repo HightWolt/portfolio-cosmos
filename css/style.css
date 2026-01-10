@@ -391,6 +391,7 @@ input:focus, textarea:focus {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    display: none;
     transition: all 0.3s ease;
 }
 
@@ -422,19 +423,19 @@ input:focus, textarea:focus {
     max-height: 250px;
 }
 
-.messages {
+.message {
     padding: 10px 25px;
     align-self: flex-start;
     border-bottom-left-radius: 3px;
 }
 
-.messages.bot {
+.message.bot {
     background: rgba(67, 97, 238, 0.1);
     align-self: flex-start;
     border-bottom-left-radius: 3px;
 }
 
-.messages.user {
+.message.user {
     background: var(--accent);
     color: white;
     align-self: flex-end;
@@ -466,8 +467,8 @@ input:focus, textarea:focus {
 }
 
 /* Скрытие по умолчанию */
-.chatbot[aria-hidden="true"] {
-    display: none;
+.chatbot[aria-hidden="false"] {
+    display: flex;
 }
 
 /* Footer */
