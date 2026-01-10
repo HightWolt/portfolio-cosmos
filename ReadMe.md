@@ -1,6 +1,6 @@
 # 🌌 Космическое Портфолио
 
-[!https://img.shields.io/badge/Demo-GitHub_Pages-33ccff?style=flat-square&logo=github]
+[!https://img.shields.io/badge/Demo-GitHub_Pages-33ccff?style=flat-square&logo=github(https://hightwolt.github.io/portfolio-cosmos/)]
 
 ## 🚀 Цели проекта
 - Lighthouse ≥ 95
@@ -30,5 +30,6 @@
 - [x] **«SEO-навигатор»** (Lighthouse SEO = 100/100.)
 - [x] **«Оптимизатор»** (Lighthouse Performance = 99/100.)
 - [x] **«Ключ к чат-боту»** (Активирован чат-бот «Капитан Верстак».)
+
 
 
