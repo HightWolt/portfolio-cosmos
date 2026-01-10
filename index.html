@@ -86,6 +86,21 @@
         <p>🚀 Собрано вручную. GitHub Pages. Lighthouse ≥95 — цель!</p>
     </footer>
 
+    <!-- Чат-бот "Капитан Верстак" -->
+    <div class="chatbot" aria-hidden="true">
+        <div class="chatbot-header">
+            <h3>Капитан Верстак</h3>
+            <button class="chatbot-toggle" aria-label="Скрыть чат"></button>
+        </div>
+        <div class="chatbot-messages">
+            <div class="message bot">Добро пожаловать на борт, пилот! ✨<br>Нажмите <strong>?</strong>, чтобы увидеть команды.</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Введите команду..." aria-label="Команда">
+            <button class="chatbot-send" aria-label="Отправить">→</button>
+        </div>
+    </div>
+
     <!-- Скрипты -->
     <script>
         // Пока минимум JS — только переключение темы
@@ -104,5 +119,6 @@
         }
     </script>
     <script src="js/form.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>
