@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "url": ["https://<username>.github.io/portfolio-cosmos/"],
+      "url": ["https://HightWolt.github.io/portfolio-cosmos/"],
       "settings": {
         "preset": "desktop",
         "onlyCategories": ["performance", "accessibility", "best-practices", "seo"]
@@ -16,3 +16,4 @@
     }
   }
 }
+
