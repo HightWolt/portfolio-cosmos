@@ -471,6 +471,63 @@ input:focus, textarea:focus {
     display: flex;
 }
 
+/* Звёздный генератор */
+.star-generator {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 10px 30px var(--card-shadow);
+}
+
+.star-counter {
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.progress-bar {
+    height: 12px;
+    background: #3a3a5d;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #4cc9f0, #4361ee);
+    transition: width 0.5s ease;
+}
+
+.star-button {
+    display: inline-block;
+    background: #ff9e64;
+    color: #0d0d1a;
+    font-weight: 700;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin: 1rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(255, 158, 100, 0.4);
+}
+
+.star-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 158, 100, 0.6);
+}
+
+.reward-note {
+    color: var(--text-secondary);
+    font-size: italic;
+    margin-top: 0.5rem;
+}
+
 /* Footer */
 .footer {
     text-align: center;
