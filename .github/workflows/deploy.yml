@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: 🚀 Checkout кода
-              uses: action/chekout@v4
+              uses: actions/chekout@v4
             
             - name: ⚡ Установка Node.js
               uses: actions/setup-node@v3
