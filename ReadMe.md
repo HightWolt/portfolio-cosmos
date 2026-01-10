@@ -1,6 +1,9 @@
 # 🌌 Космическое Портфолио  
-[![Статус](https://img.shields.io/badge/статус-в_полёте-33ccff?style=flat&logo=github)](https://HightWolt.github.io/portfolio-cosmos/)
-[![Звёзды](https://img.shields.io/github/stars/HightWolt/portfolio-cosmos?style=social)](https://github.com/HightWolt/portfolio-cosmos/stargazers)
+[![CI/CD Status](https://github.com/HightWolt/portfolio-cosmos/actions/workflows/deploy.yml/badge.svg)](https://github.com/HightWolt/portfolio-cosmos/actions)
+[![Lighthouse Score](https://img.shields.io/badge/Lighthouse-95%2B-brightgreen?logo=google-chrome)](https://HightWolt.github.io/portfolio-cosmos/)
+[![GitHub Stars](https://img.shields.io/github/stars/HightWolt/portfolio-cosmos?style=social)](https://github.com/HightWolt/portfolio-cosmos/stargazers)
+
+> **«Автоматизация — это как гравитация: чем сильнее, тем стабильнее орбита твоего проекта»** ✨
 
 > **«Это не просто портфолио — это космический корабль твоей карьеры. Поставь ⭐, чтобы запустить его к звёздам!»** ✨
 
@@ -30,3 +33,17 @@
 > 💡 **Челлендж «100 звёзд»:**  
 > Каждая реальная ⭐ в репозитории приносит **+2 игровых звезды**!  
 > Текущий прогресс: [░░░░░░░░░░] 0/100 ⭐
+
+## 🤖 CI/CD Pipeline
+| Этап | Инструмент | Статус |
+|------|------------|--------|
+| **Аудит** | Lighthouse CI | ![Lighthouse](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2FHightWolt.github.io%2Fportfolio-cosmos%2Flighthouse.json&query=categories.performance.score&label=Performance&color=brightgreen) |
+| **Деплой** | GitHub Actions | Автоматический на каждый пуш в `main` |
+| **Мониторинг** | GitHub Status | [![Статус](https://img.shields.io/github/deployments/HightWolt/portfolio-cosmos/github-pages?label=production)](https://github.com/HightWolt/portfolio-cosmos/deployments) |
+
+### Как это работает:
+1. При пуше в `main` запускается workflow.
+2. Lighthouse проверяет сайт: **минимум 95 баллов** по Performance, SEO, Accessibility.
+3. При успешной проверке — деплой на GitHub Pages.
+4. Если проверка падает — пул-реквест блокируется.
+
