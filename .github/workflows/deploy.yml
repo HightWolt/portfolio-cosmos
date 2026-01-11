@@ -6,8 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  build-and-deploy:
+  ighthouse-audit:
     runs-on: ubuntu-latest
     steps:
       - name: 🚀 Checkout кода
@@ -27,12 +32,26 @@ jobs:
           configPath: ./lighthouserc.json
         env:
           LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+        
+  deploy:
+    needs: ighthouse-audit
+    runs-on: ubuntu-latest
+    environment: 
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Checkout кода
+        uses: actions/checkout@v4
 
+      - name: 📤 Подготовка артефактов для GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+          
       - name: 📤 Деплой на GitHub Pages
         uses: actions/deploy-pages@v2
-        id: deployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event_name == 'push' && github.ref_name == 'main'
 
       - name: 📊 Отправка Lighthouse-отчёта
         if: success() && github.event_name == 'push'
@@ -43,7 +62,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   notify:
-    needs: build-and-deploy
+    needs: deploy
     runs-on: ubuntu-latest
     if: always()
     steps:
