@@ -91,8 +91,7 @@ body::after {
     font-weight: 600;
 }
 
-.form-title, 
-.project-title {
+.form-title {
     text-shadow: 0 0 10px rgba(67, 97, 238, 0.7);
 }
 
@@ -235,7 +234,8 @@ body::after {
 .project-title {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
-    color: var(--accent);
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .project-desc {
@@ -245,7 +245,7 @@ body::after {
 
 .project-tag {
     background: rgba(106, 91, 238, 0.35);
-    color: var(--text-secondary);
+    color: var(--text-primary);
     border: 1px solid rgba(139, 92, 246, 0.4);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
@@ -257,6 +257,10 @@ body::after {
 .project-tag:hover {
     background: rgba(124, 58, 237, 0.3);
     transform: scale(1.05);
+}
+
+.theme-dark .project-tag {
+    color: var(--text-primary);
 }
 
 /* Форма обратной связи */
