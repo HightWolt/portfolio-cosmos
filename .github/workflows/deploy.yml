@@ -27,17 +27,36 @@ jobs:
         with:
           node-version: '18'
       
+      # 1. УБЕДИТЕСЬ, ЧТО GITHUB PAGES ВКЛЮЧЕНЫ В НАСТРОЙКАХ РЕПОЗИТОРИЯ
+      #    Settings → Pages → Branch: main, Folder: /(root)
+      
+      # 2. СБОРКА СТАТИЧЕСКИХ ФАЙЛОВ (КРИТИЧЕСКИ ВАЖНО)
+      - name: 🏗️ Сборка статики
+        run: |
+          # Для простого HTML/CSS/JS сайта это может быть просто копирование файлов
+          # Если у вас есть сборка (например, через npm), раскомментируйте:
+          # npm install
+          # npm run build
+          mkdir -p ./build
+          cp -r ./* ./build/ 2>/dev/null || :  # Игнорируем ошибки если нет файлов
+        # Если у вас SPA или сложный проект, замените на вашу команду сборки
+
+      # 3. НАСТРОЙКА GITHUB PAGES
       - name: 🛠️ Setup GitHub Pages
         uses: actions/configure-pages@v3
       
+      # 4. ЗАГРУЗКА АРТЕФАКТОВ (КЛЮЧЕВОЙ ШАГ!)
+      - name: ⬆️ Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./build  # Папка со статикой
+      
+      # 5. ДЕПЛОЙ НА GITHUB PAGES
       - name: 📤 Деплой на GitHub Pages
         uses: actions/deploy-pages@v2
         id: deployment
 
-      - name: ⚙️ Запуск тестов
-        run: echo "Здесь могут быть тесты или линтеры"
-        if: success()
-
+      # 6. Lighthouse аудит (Только после успешного деплоя!)
       - name: 🔍 Аудит Lighthouse
         uses: treosh/lighthouse-ci-action@v9
         if: github.event_name == 'push' && success()
@@ -46,3 +65,5 @@ jobs:
             ${{ steps.deployment.outputs.page_url }}
           temporaryPublicStorage: true
           configPath: ./lighthouserc.json
+        env:
+          LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
