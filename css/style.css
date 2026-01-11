@@ -260,10 +260,6 @@ body::after {
     transform: scale(1.05);
 }
 
-.theme-dark .project-tag {
-    color: var(--text-primary);
-}
-
 /* Форма обратной связи */
 .contact-form {
     max-width: 800px;
@@ -358,6 +354,9 @@ input:focus, textarea:focus {
     border-radius: 8px;
     text-align: center;
     font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .form-success {
@@ -379,6 +378,12 @@ input:focus, textarea:focus {
 /* Показываем сообщения при aria-hidden="false" */
 [aria-hidden="false"] {
     display: block !important;
+}
+
+[aria-hidden="false"].form-success,
+[aria-hidden="false"].form-error {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Чат-бот "Капитан Верстак" */
