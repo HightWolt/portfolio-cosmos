@@ -6,18 +6,9 @@ on:
   pull_request:
     branches: [main]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
     steps:
       - name: 🚀 Checkout кода
         uses: actions/checkout@v4
@@ -26,44 +17,40 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      
-      # 1. УБЕДИТЕСЬ, ЧТО GITHUB PAGES ВКЛЮЧЕНЫ В НАСТРОЙКАХ РЕПОЗИТОРИЯ
-      #    Settings → Pages → Branch: main, Folder: /(root)
-      
-      # 2. СБОРКА СТАТИЧЕСКИХ ФАЙЛОВ (КРИТИЧЕСКИ ВАЖНО)
-      - name: 🏗️ Сборка статики
-        run: |
-          # Для простого HTML/CSS/JS сайта это может быть просто копирование файлов
-          # Если у вас есть сборка (например, через npm), раскомментируйте:
-          # npm install
-          # npm run build
-          mkdir -p ./build
-          cp -r ./* ./build/ 2>/dev/null || :  # Игнорируем ошибки если нет файлов
-        # Если у вас SPA или сложный проект, замените на вашу команду сборки
 
-      # 3. НАСТРОЙКА GITHUB PAGES
-      - name: 🛠️ Setup GitHub Pages
-        uses: actions/configure-pages@v3
-      
-      # 4. ЗАГРУЗКА АРТЕФАКТОВ (КЛЮЧЕВОЙ ШАГ!)
-      - name: ⬆️ Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: ./build  # Папка со статикой
-      
-      # 5. ДЕПЛОЙ НА GITHUB PAGES
-      - name: 📤 Деплой на GitHub Pages
-        uses: actions/deploy-pages@v2
-        id: deployment
-
-      # 6. Lighthouse аудит (Только после успешного деплоя!)
       - name: 🔍 Аудит Lighthouse
         uses: treosh/lighthouse-ci-action@v9
-        if: github.event_name == 'push' && success()
         with:
           urls: |
-            ${{ steps.deployment.outputs.page_url }}
+            https://HightWolt.github.io/portfolio-cosmos/
           temporaryPublicStorage: true
           configPath: ./lighthouserc.json
         env:
           LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📤 Деплой на GitHub Pages
+        uses: actions/deploy-pages@v2
+        id: deployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📊 Отправка Lighthouse-отчёта
+        if: success() && github.event_name == 'push'
+        run: |
+          echo "Lighthouse scores:"
+          cat .lighthouseci/manifest.json | jq .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: ✅ Уведомление об успехе
+        if: needs.build-and-deploy.result == 'success'
+        run: echo "🚀 Деплой успешен! Сайт обновлё"
+      
+      - name: ❌ Уведомление об ошибке
+        if: needs.build-and-deploy.result != 'success'
+        run: echo "::error::🔥 Деплой упал! Проверь логи workflow."
