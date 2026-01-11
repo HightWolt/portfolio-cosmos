@@ -1,0 +1,56 @@
+name: Cosmic Portfolio CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Checkout кода
+        uses: actions/checkout@v4
+
+      - name: ⚡ Установка Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 🔍 Аудит Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            https://HightWolt.github.io/portfolio-cosmos/
+          temporaryPublicStorage: true
+          configPath: ./lighthouserc.json
+        env:
+          LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📤 Деплой на GitHub Pages
+        uses: actions/deploy-pages@v2
+        id: deployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📊 Отправка Lighthouse-отчёта
+        if: success() && github.event_name == 'push'
+        run: |
+          echo "Lighthouse scores:"
+          cat .lighthouseci/manifest.json | jq .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: ✅ Уведомление об успехе
+        if: needs.build-and-deploy.result == 'success'
+        run: echo "🚀 Деплой успешен! Сайт обновлён"
+      
+      - name: ❌ Уведомление об ошибке
+        if: needs.build-and-deploy.result != 'success'
+        run: echo "::error::🔥 Деплой упал! Проверь логи workflow."
