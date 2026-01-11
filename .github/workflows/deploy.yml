@@ -6,9 +6,18 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
     steps:
       - name: 🚀 Checkout кода
         uses: actions/checkout@v4
@@ -17,22 +26,30 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          
+      - name: 🛠️ Setup GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: 🏗️ Сборка проекта
+        run: npm install && npm run build
+
+      - name: 📤 Деплой на GitHub Pages
+        uses: actions/deploy-pages@v2
+        id: deployment
+
+      - name: ⚙️ Запуск тестов
+        run: echo "Здесь могут быть тесты или линтеры"
+        if: success()
 
       - name: 🔍 Аудит Lighthouse
         uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
-            https://HightWolt.github.io/portfolio-cosmos/
+            ${{ steps.deployment.outputs.page_url }}
           temporaryPublicStorage: true
           configPath: ./lighthouserc.json
         env:
           LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 📤 Деплой на GitHub Pages
-        uses: actions/deploy-pages@v2
-        id: deployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📊 Отправка Lighthouse-отчёта
         if: success() && github.event_name == 'push'
