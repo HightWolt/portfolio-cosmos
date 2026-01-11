@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Космическое портфолио</title>
     <meta name="description" content="Моё портфолио — карта проектов в космосе.">
+    <meta name="theme-color" content="#f9f9ff" id="theme-color-meta">
+
+    <title>Космическое портфолио</title>
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Google Fonts -->
@@ -17,7 +19,7 @@
         <h1 class="header-title">🌌 Космическое Портфолио</h1>
 
         <!-- CSS-звезда «Пульсар» -->
-        <div class="pulsar-star" role="button" aria-label="Активировать чат-бота «Капитан Верстак»" tabindex="0">
+        <div class="pulsar-star" role="button" aria-label="Активировать чат-бота «Капитан Верстак»" aria-expanded="true" tabindex="0">
             <div class="star-core"></div>
             <div class="star-glow"></div>
         </div>
@@ -90,11 +92,11 @@
                     <span class="submit-loading" aria-hidden="true">🚀</span>
                 </button>
 
-                <div class="form-success" role="status" aria-hidden="true">
+                <div class="form-success" role="status" aria-live="polite" aria-hidden="true">
                     ✅ Сообщение отправлено в гиперпространство!
                 </div>
                 
-                <div class="form-error" role="alert" aria-hidden="true">
+                <div class="form-error" role="alert" aria-live="assertive" aria-hidden="true">
                     ❌ Ошибка связи с МКС! Попробуйте позже.
                 </div>
 
@@ -122,22 +124,7 @@
     </div>
 
     <!-- Скрипты -->
-    <script>
-        // Пока минимум JS — только переключение темы
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            const body = document.body;
-            const isLight = body.classList.contains('theme-light');
-            body.classList.toggle('theme-light', !isLight);
-            body.classList.toggle('theme-dark', isLight);
-            localStorage.setItem('theme', isLight ? 'dark' : 'light');
-        });
-
-        // Восстановление темы из localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            document.body.classList.replace('theme-light', 'theme-dark');
-        }
-    </script>
+    <script src="js/theme.js"></script>
     <script src="js/form.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/stars.js"></script>

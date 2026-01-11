@@ -584,9 +584,7 @@ input:focus, textarea:focus {
         opacity: 0.3;
         animation: none;
     }
-}
 
-@media (max-width: 768px) {
     body::after {
         background-size: 
             95px 105px, 
