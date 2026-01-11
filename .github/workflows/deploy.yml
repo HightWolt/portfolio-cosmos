@@ -10,35 +10,46 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  actions: read  # Добавлено для работы с артефактами
+  actions: read
 
 jobs:
-  lighthouse-audit:  # ИСПРАВЛЕНО: опечатка в названии
+  lighthouse-audit:
     runs-on: ubuntu-latest
     steps:
       - name: 🚀 Checkout кода
         uses: actions/checkout@v4
 
       - name: ⚡ Установка Node.js
-        uses: actions/setup-node@v4  # Обновлено до v4
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Обновлено до LTS версии
+          node-version: '20'
+
+      - name: 🌐 Запуск локального сервера для аудита
+        run: |
+          npm install -g serve
+          serve -s . -l 8080 &
+          echo "SERVER_PID=$!" >> $GITHUB_ENV
 
       - name: 🔍 Аудит Lighthouse
-        uses: treosh/lighthouse-ci-action@v10  # Обновлено до v10
+        uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            https://HightWolt.github.io/portfolio-cosmos/
+            http://localhost:8080
           temporaryPublicStorage: true
           configPath: ./lighthouserc.json
         env:
           LIGHTHOUSE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
+      - name: 🛑 Остановка сервера
+        if: always()
+        run: |
+          kill $SERVER_PID || true
+
   deploy:
     needs: lighthouse-audit
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
@@ -46,11 +57,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📤 Подготовка артефактов для GitHub Pages
-        uses: actions/upload-pages-artifact@v3  # Обновлено до v3 (актуальная версия)
+        uses: actions/upload-pages-artifact@v4  # v4 — актуальная версия в 2026
+        with:
+          path: '.'  # КРИТИЧЕСКИ ВАЖНО: указать путь
 
       - name: 🚀 Деплой на GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # Обновлено до v4 (требуется для артефактов v4)
+        uses: actions/deploy-pages@v5  # v5 — последняя версия
         if: github.event_name == 'push' && github.ref_name == 'main'
 
   notify:
@@ -59,9 +72,9 @@ jobs:
     if: always()
     steps:
       - name: ✅ Уведомление об успехе
-        if: needs.deploy.result == 'success'  # ИСПРАВЛЕНО: правильное имя job
-        run: echo "🚀 Деплой успешен!"
+        if: needs.deploy.result == 'success'
+        run: echo "🚀 Деплой успешен! Сайт обновлён:"
       
       - name: ❌ Уведомление об ошибке
-        if: needs.deploy.result != 'success'  # ИСПРАВЛЕНО: правильное имя job
+        if: needs.deploy.result != 'success'
         run: echo "::error::🔥 Деплой упал! Проверь логи workflow."
