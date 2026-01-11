@@ -17,7 +17,7 @@
         <h1 class="header-title">🌌 Космическое Портфолио</h1>
 
         <!-- CSS-звезда «Пульсар» -->
-        <div class="pulsar-star" role="button" aria-label="Космический навигатор" tabindex="0">
+        <div class="pulsar-star" role="button" aria-label="Активировать чат-бота «Капитан Верстак»" tabindex="0">
             <div class="star-core"></div>
             <div class="star-glow"></div>
         </div>
@@ -81,7 +81,7 @@
 
                 <div class="form-group">
                     <label for="message">Сообщение в гиперпространство</label>
-                    <textarea name="message" id="message" rows="4" required maxlength="10"></textarea>
+                    <textarea name="message" id="message" rows="4" required maxlength="500"></textarea>
                     <div class="error-message" role="alert"></div>
                 </div>
 
@@ -133,8 +133,8 @@
         });
 
         // Восстановление темы из localStorage
-        const savedThame = localStorage.getItem('theme') || 'light';
-        if (savedThame === 'dark') {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
             document.body.classList.replace('theme-light', 'theme-dark');
         }
     </script>

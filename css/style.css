@@ -35,7 +35,7 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
-    transition: var(--transition);
+    transition: background-color 0.5s ease, color 0.3s ease;
     padding: 0;
     margin: 0;
 }
@@ -53,6 +53,7 @@ body::before {
         radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.07) 0%, transparent 30%),
         linear-gradient(to bottom, var(--bg-primary), #0f0f1b);
     z-index: -2;
+    transition: background 0.5s ease;
 }
 
 /* Звёзды (простой CSS) */
@@ -196,7 +197,7 @@ body::after {
 /* Projects Grid */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minimax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     padding: 2rem;
     max-width: 1200px;
