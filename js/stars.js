@@ -32,12 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Обновить интерфейс
             currentStars.textContent = starsCount;
-            const percent = Math.min(100, (cashedStars / 100) * 100);
+            const percent = Math.min(100, (starsCount / 100) * 100);
             progress.style.width = `${percent}%`;
 
+            refreshBtn.textContent = '✓';
+            setTimeout(() => {
+                if (refreshBtn) refreshBtn.textContent = '⟳';
+            }, 1500);
+
             // Сохранить в localStorage
-            localStorage.getItem('githubStars', starsCount);
-            localStorage.getItem('lastUpdate', new Date().toISOString());
+            localStorage.setItem('githubStars', starsCount);
+            localStorage.setItem('lastUpdate', new Date().toISOString());
 
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
@@ -51,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function showUpdateError() {
+        if (!refreshBtn) return;
         const originalContent = refreshBtn.textContent;
         refreshBtn.textContent = '⚠️';
 
