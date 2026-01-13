@@ -1,25 +1,61 @@
-// Имитация прогресса (в реальности: запрос к GitHub API)
 document.addEventListener('DOMContentLoaded', () => {
+    const refreshBtn = document.querySelector('.refresh-stars');
     const currentStars = document.querySelector('.current-stars');
     const progress = document.querySelector('.progress');
+    const loadingIndicator = document.querySelector('.loading');
 
-    // В реальности: fetch('https://api.github.com/repos/HightWolt/portfolio-cosmos')
-    const REAL_STARS = 27; // Пример текущих звёзд
+    // Инициализация из localStorage
+    const cashedStars = localStorage.getItem('githubStars');
+    const lastUpdate = localStorage.getItem('lastUpdate');
 
-    if (currentStars && progress) {
-        currentStars.textContent = REAL_STARS;
-        const percent = Math.min(100, (REAL_STARS / 100) * 100);
-        progress.style.width = `${percent}%`
-
-        // Анимация роста при загрузке
-        setTimeout(() => {
-            progress.style.transition = 'width 1.5s ease-out';
-            progress.style.width = `${percent}%`
-        }, 300);
+    if (cashedStars && lastUpdate) {
+        currentStars.textContent = cashedStars;
+        const percent = Math.min(100, (cashedStars / 100) * 100);
+        progress.style.width = `${percent}%`;
     }
 
-    // Easter Egg: при клике на счётчик — показать секретное сообщение
-    document.querySelector('.star-counter')?.addEventListener('click', () => {
-        alert('В 2049 году звёзды на GitHub будут стоить дороже криптовалюты. Ты на правильном пути! ✨');
+    refreshBtn?.addEventListener('click', async () => {
+        // Показать индикацию загрузки
+        refreshBtn.disabled = true;
+        loadingIndicator.style.display = 'inline-block';
+
+        try {
+            const response = await fetch('https://api.github.com/repos/HightWolt/portfolio-cosmos');
+            if (!response.ok) throw new Error('Ошибка сети');
+
+            const data = await response.json();
+            const starsCount = data.stargazers_count;
+
+        if (typeof starsCount !== 'number' || isNaN(starsCount) || starsCount < 0) {
+            throw new Error('Некорректные данные от GitHub API');
+        }
+
+            // Обновить интерфейс
+            currentStars.textContent = starsCount;
+            const percent = Math.min(100, (cashedStars / 100) * 100);
+            progress.style.width = `${percent}%`;
+
+            // Сохранить в localStorage
+            localStorage.getItem('githubStars', starsCount);
+            localStorage.getItem('lastUpdate', new Date().toISOString());
+
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+            // Показать уведомление об ошибке
+            showUpdateError();
+        } finally {
+            // Скрыть индикацию загрузки
+            refreshBtn.disabled = false;
+            loadingIndicator.style.display = 'none';
+        }
     });
+
+    function showUpdateError() {
+        const originalContent = refreshBtn.textContent;
+        refreshBtn.textContent = '⚠️';
+
+        setTimeout(() => {
+            refreshBtn.textContent = originalContent;
+        }, 2000);
+    }
 });

@@ -221,7 +221,7 @@ body::after {
     transition: var(--transition);
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 0.6s forwards;
+    animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Анимация появления */
@@ -229,10 +229,15 @@ body::after {
 .project-card:nth-child(2) { animation-delay: 0.3s; }
 .project-card:nth-child(3) { animation-delay: 0.5s; }
 
-@keyframes fadeInUp {
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -508,6 +513,18 @@ input:focus, textarea:focus {
     color: var(--accent);
 }
 
+.loading {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent);
+    border-top-color: transparent;
+    border-radius: 50%;
+    margin-left: 8px;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
 .progress-bar {
     height: 12px;
     background: #3a3a5d;
@@ -552,7 +569,8 @@ input:focus, textarea:focus {
     border: none;
     color: var(--accent);
     font-size: 1.1rem;
-    cursor: pointer;
+    opacity: 0.7;
+    cursor: not-allowed;
     margin-left: 8px;
     transition: transform 0.3s ease;
 }
