@@ -168,6 +168,15 @@ body::after {
     z-index: 2;
 }
 
+.pulsar-star:hover .star-core {
+    animation: twinkle 0.5s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.8; box-shadow: 0 0 15px #ff5400, 0 0 30px rgba(255, 158, 100, 0.6); }
+    to { opacity: 1; box-shadow: 0 0 20px #ff5400, 0 0 40px rgba(255, 200, 100, 0.8); }
+}
+
 .star-glow {
     position: absolute;
     width: 40px;
@@ -252,7 +261,7 @@ body::after {
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
-    transition: var(--transition);
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .project-tag:hover {
@@ -536,6 +545,20 @@ input:focus, textarea:focus {
     color: var(--text-secondary);
     font-size: italic;
     margin-top: 0.5rem;
+}
+
+.refresh-stars {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.refresh-stars:hover {
+    transform: rotate(180deg);
 }
 
 /* Footer */

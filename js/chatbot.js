@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     pulsarStar?.addEventListener('click', () => {
         clickCount++;
 
-        // Открываем чат-бота при любом клике (устраняем конфликт с пасхалкой)
-        pulsarStar.setAttribute('aria-expanded', 'true');
-        chatbot.ariaHidden = 'false';
+        const isChatOpen = chatbot.ariaHidden === 'true';
+        chatbot.ariaHidden = isChatOpen ? 'false' : 'true';
+        pulsarStar.setAttribute('aria-expanded', isChatOpen ? 'true' : 'false');
 
         // Сбрасываем счётчик после задержки
         setTimeout(() => {
