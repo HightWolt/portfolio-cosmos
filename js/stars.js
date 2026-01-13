@@ -4,14 +4,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const progress = document.querySelector('.progress');
     const loadingIndicator = document.querySelector('.loading');
 
-    // Инициализация из localStorage
-    const cashedStars = localStorage.getItem('githubStars');
-    const lastUpdate = localStorage.getItem('lastUpdate');
+    function isLocalStorageAvailable() {
+        try {
+            const test = '__localStorage_test__';
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 
-    if (cashedStars && lastUpdate) {
-        currentStars.textContent = cashedStars;
-        const percent = Math.min(100, (cashedStars / 100) * 100);
-        progress.style.width = `${percent}%`;
+    // Инициализация из localStorage
+    if (isLocalStorageAvailable()) {
+        const cashedStars = localStorage.getItem('githubStars');
+        const lastUpdate = localStorage.getItem('lastUpdate');
+
+        if (cashedStars && progress && cashedStars && lastUpdate) {
+            currentStars.textContent = cashedStars;
+            const percent = Math.min(100, (cashedStars / 100) * 100);
+            progress.style.width = `${percent}%`;
+        }
     }
 
     refreshBtn?.addEventListener('click', async () => {

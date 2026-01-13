@@ -357,6 +357,12 @@ input:focus, textarea:focus {
     cursor: not-allowed;
 }
 
+.form-submit:focus {
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.5);
+    outline: none;
+}
+
+
 .submit-loading {
     display: none;
     animation: spin 1s linear infinite;
@@ -577,10 +583,7 @@ input:focus, textarea:focus {
 
 .refresh-stars:not(:disabled):hover {
     animation: breathe 1.5s ease-in-out infinite;
-}
-
-.refresh-stars:hover {
-    transform: rotate(180deg);
+    transform: none;
 }
 
 @keyframes breathe {
@@ -630,14 +633,12 @@ input:focus, textarea:focus {
 }
 
 @media (max-width: 768px) {
-    .stars {
+    .stars, .nebula {
         animation: none;
-        background-size: 100px 100px, 200px 200px;
     }
 
     .nebula {
         opacity: 0.3;
-        animation: none;
     }
 
     body::after {
